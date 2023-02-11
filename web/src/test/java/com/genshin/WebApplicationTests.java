@@ -23,7 +23,7 @@ class WebApplicationTests {
 
     @Test
     void test_register(){
-        User postUser=new User("lawrence","123","admin");
+        User postUser=new User("genshin_artifact_recorder","genshin123","admin");
         final var responseUser = restTemplate.postForObject("/users/register",postUser, User.class);
         assertThat(responseUser.getAuthority()).isEqualTo(postUser.getAuthority());
         assertThat(responseUser.getName()).isEqualTo(postUser.getName());

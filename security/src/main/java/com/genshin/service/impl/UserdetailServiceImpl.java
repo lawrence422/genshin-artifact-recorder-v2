@@ -2,7 +2,6 @@ package com.genshin.service.impl;
 
 import com.genshin.dao.UserProfile;
 import com.genshin.exception.MissingAuthorityException;
-import com.genshin.service.RegisterService;
 import com.genshin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -1,6 +1,25 @@
+CREATE TABLE IF NOT EXISTS `artifact_type_enum`(
+    `artifact_type_abbrevation` varchar(45) NOT NULL,
+    `artifact_type_name` varchar(45) NOT NULL,
+    PRIMARY KEY(`artifact_type_abbrevation`)
+    );
+
+CREATE TABLE IF NOT EXISTS `artifact_stats_type_enum`(
+    `artifact_stats_type_abbrevation` varchar(45) NOT NULL,
+    `artifact_stats_type_name` varchar(45) NOT NULL,
+    PRIMARY KEY(`artifact_stats_type_abbrevation`)
+    );
+
+CREATE TABLE IF NOT EXISTS `artifact_set_type_enum`(
+    `artifact_set_type_abbrevation` varchar(45) NOT NULL,
+    `artifact_set_type_name` varchar(45) NOT NULL,
+    PRIMARY KEY(`artifact_set_type_abbrevation`)
+)
+
+
 CREATE IF NOT EXISTS TABLE `artifact`
 (
-    `artifact_id`                        Long NOT NULL AUTO_INCREMENT,
+    `artifact_id`                        int NOT NULL AUTO_INCREMENT,
     `artifact_date`                      timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `artifact_set`                       varchar(45)  DEFAULT NULL,
     `artifact_type`                      varchar(45)  DEFAULT NULL,
@@ -13,7 +32,9 @@ CREATE IF NOT EXISTS TABLE `artifact`
     `artifact_sub_initial_stats_3_value` double       DEFAULT NULL,
     `artifact_sub_initial_stats_4`       varchar(45)  DEFAULT NULL,
     `artifact_sub_initial_stats_4_value` double       DEFAULT NULL,
-    PRIMARY KEY (`artifact_id`)
+    PRIMARY KEY (`artifact_id`),
+    CONSTRAINT `artifact_set_fk` FOREIGN KEY(`artifact_set`) REFERENCES `artifact_set_type_enum` (`artifact_set_type_abbrevation`),
+    CONSTRAINT `artifact_type_fk` FOREIGN KEY(`artifact_type`) REFERENCES `artifact_type_enum`(`artifact_type_abbrevation`)
 );
 
 CREATE TABLE IF NOT EXISTS `artifact_enchanting` (
@@ -33,5 +54,11 @@ CREATE TABLE IF NOT EXISTS `artifact_enchanting` (
                                        CONSTRAINT `foreign_key` FOREIGN KEY (`artifact_id`) REFERENCES `artifact` (`artifact_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `users`(
+    `name` varchar(255) NOT NULL,
+    `authority` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    PRIMARY KEY(`name`)
+);
 
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/tests")
 public class TestController {
     @GetMapping("/status")
     public String checkStatus(){
@@ -15,6 +15,11 @@ public class TestController {
     @GetMapping("/login")
     public String checkLogin(){
         return "Login successfully";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return String.format("%s%s","test","%");
     }
 
 

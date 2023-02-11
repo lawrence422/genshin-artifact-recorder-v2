@@ -4,7 +4,6 @@ import com.genshin.entity.User;
 import com.genshin.repository.UserRepository;
 import com.genshin.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

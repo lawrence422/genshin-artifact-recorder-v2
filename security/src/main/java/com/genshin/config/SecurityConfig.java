@@ -1,7 +1,6 @@
 package com.genshin.config;
 
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.genshin.dao.UserProfile;
 import com.genshin.exception.GenerateTokenFailException;
@@ -25,8 +24,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +50,11 @@ public class SecurityConfig {
                 .successHandler(customLoginSuccessHandler());
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/test/status").permitAll()
+                .requestMatchers("/tests/status").permitAll()
+                .requestMatchers("/tests/test").permitAll()
                 .requestMatchers("/users/register").permitAll()
-                .requestMatchers("/test/login").hasAuthority("admin")
-                .requestMatchers("/artifact/insert").hasAnyAuthority("normal","admin")
+                .requestMatchers("/tests/login").hasAuthority("admin")
+                .requestMatchers("/artifact/insert").hasAnyAuthority("normal", "admin")
                 .anyRequest().authenticated();
 
 
@@ -90,7 +92,15 @@ public class SecurityConfig {
             }
 
 
-            Map<String, String> responseBody = Collections.singletonMap("token", JWTUtils.generateToken(userProfile.getUsername(), list));
+            Map<String, Object> responseBody = new LinkedHashMap<>();
+            responseBody.put("status", "200");
+            responseBody.put("message", "login successfully");
+            responseBody.put("data", Collections.
+                    singletonMap(
+                            "token", JWTUtils.generateToken(userProfile.getUsername(), list)
+                    )
+            );
+            responseBody.put("date", LocalDateTime.now().toString());
             PrintWriter printWriter = response.getWriter();
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

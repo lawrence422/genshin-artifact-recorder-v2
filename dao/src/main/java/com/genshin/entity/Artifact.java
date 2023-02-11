@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +15,23 @@ import java.sql.Timestamp;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "artifact")
 public class Artifact implements Serializable {
+
+    public Artifact(String artifactSet, String artifactType, String artifactMainStats, String artifactSubInitialStats1, double artifactSubInitialStats1Value, String artifactSubInitialStats2, double artifactSubInitialStats2Value, String artifactSubInitialStats3, double artifactSubInitialStats3Value, String artifactSubInitialStats4, double artifactSubInitialStats4Value) {
+        this.artifactSet = artifactSet;
+        this.artifactType = artifactType;
+        this.artifactMainStats = artifactMainStats;
+        this.artifactSubInitialStats1 = artifactSubInitialStats1;
+        this.artifactSubInitialStats1Value = artifactSubInitialStats1Value;
+        this.artifactSubInitialStats2 = artifactSubInitialStats2;
+        this.artifactSubInitialStats2Value = artifactSubInitialStats2Value;
+        this.artifactSubInitialStats3 = artifactSubInitialStats3;
+        this.artifactSubInitialStats3Value = artifactSubInitialStats3Value;
+        this.artifactSubInitialStats4 = artifactSubInitialStats4;
+        this.artifactSubInitialStats4Value = artifactSubInitialStats4Value;
+    }
+
     @Id
     @Column(name = "artifact_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
