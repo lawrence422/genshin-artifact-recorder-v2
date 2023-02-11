@@ -1,6 +1,6 @@
 CREATE IF NOT EXISTS TABLE `artifact`
 (
-    `artifact_id`                        int NOT NULL AUTO_INCREMENT,
+    `artifact_id`                        Long NOT NULL AUTO_INCREMENT,
     `artifact_date`                      timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     `artifact_set`                       varchar(45)  DEFAULT NULL,
     `artifact_type`                      varchar(45)  DEFAULT NULL,

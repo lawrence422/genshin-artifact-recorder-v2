@@ -1,12 +1,14 @@
-CREATE VIEW IF NOT EXISTS `genshin_artifact`.`artifact_set_rate` AS
+DROP VIEW IF EXISTS `artifact_set_rate`;
+CREATE VIEW `genshin_artifact`.`artifact_set_rate` AS
 SELECT (COUNT(1) / (SELECT COUNT(0)
                     FROM `genshin_artifact`.`artifact`
                     WHERE ((`genshin_artifact`.`artifact`.`artifact_set` = '追忆')
-                        OR (genshin_artifact.artifact.artifact_set = '绝缘')))) AS 绝缘比例
+                        OR (genshin_artifact.artifact.artifact_set = '绝缘')))) AS `绝缘比例`
 FROM genshin_artifact.artifact
 WHERE (genshin_artifact.artifact.artifact_set = '绝缘');
 
-CREATE VIEW IF NOT EXISTS `genshin_artifact`.`double_critical` AS
+DROP VIEW IF EXISTS `double_critical`;
+CREATE VIEW `genshin_artifact`.`double_critical` AS
 select (select count(0)
         from `genshin_artifact`.`artifact`
         where ((('暴击' in (`genshin_artifact`.`artifact`.`artifact_main_stats`,
@@ -64,10 +66,11 @@ select (select count(0)
                                                                           (`genshin_artifact`.`artifact`.`artifact_sub_initial_stats_4` is null)))) as decimal(5, 4)))          AS `complement_success_rate`,
        (select cast(((sum(`complement_double_critical`) + sum(`initial_double_critical`)) /
                      (select count(0) from `genshin_artifact`.`artifact`)) as decimal(5, 4)))                                                                                   AS `total_double_critical_rate`,
-       (select count(0) from `genshin_artifact`.`artifact`);
-AS `total_artifact`
+       (select count(0) from `genshin_artifact`.`artifact`)
+AS `total_artifact`;
 
-CREATE VIEW IF NOT EXISTS `genshin_artifact`.`double_critical_enchanting_rate` AS
+DROP VIEW IF EXISTS `double_critical_enchanting_rate`;
+CREATE VIEW `genshin_artifact`.`double_critical_enchanting_rate` AS
 select ((select sum(`a`.`total2`)
          from (select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1`) AS `total2`
                from `genshin_artifact`.`artifact_enchanting`
