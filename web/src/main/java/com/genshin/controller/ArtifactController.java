@@ -20,7 +20,6 @@ public class ArtifactController {
 
     @PostMapping("/insert")
     public int[] insertArtifact(@RequestBody @NonNull List<List<String>> artifactStringList) {
-        System.out.println(artifactStringList);
         return artifactService.insertArtifact(artifactStringList);
     }
 }
