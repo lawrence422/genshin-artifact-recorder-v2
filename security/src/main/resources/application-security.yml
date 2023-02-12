@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:8708/genshin_artifact?createDatabaseIfNotExist=true
+    username: root
+    password: 87bx2296LOTPC.
+

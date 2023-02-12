@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: security,dao,mysql
+server:
+  port: 8709

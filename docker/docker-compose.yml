@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+ mysql-genshin:
+  image: 'mysql:8.0.32'
+  container_name: 'mysql-genshin'
+  environment:
+   MYSQL_DATABASE: 'genshin_artifact'
+   MYSQL_ROOT_PASSWORD: ''
+  ports:
+   - '8708:3306'
+  volumes:
+   - '$PWD/artifact:/var/lib/mysql'
