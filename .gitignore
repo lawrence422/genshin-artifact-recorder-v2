@@ -38,4 +38,4 @@ out/
 
 application-mysql.yml
 /artifact
-/docker/docker-compose.yml
+
