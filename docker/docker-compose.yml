@@ -11,3 +11,9 @@ services:
    - '8708:3306'
   volumes:
    - '$PWD/artifact:/var/lib/mysql'
+
+ genshin-artifact-recorder-server:
+  image: 'genshin-artifact-recorder-server:latest'
+  container_name: 'genshin-artifact-recorder-server'
+  environment:
+   SPRING_DATASOURCE_URL: jdbc:mysql:
