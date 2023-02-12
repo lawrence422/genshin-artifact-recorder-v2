@@ -13,15 +13,16 @@ services:
    - '$PWD/artifact:/var/lib/mysql'
   healthcheck:
    test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+   interval: 5s
    timeout: 5s
-   retries: 10
+   retries: 3
 
 
  genshin-artifact-recorder-server:
   image: 'genshin-artifact-recorder-server:latest'
   container_name: 'genshin-artifact-recorder-server'
   environment:
-   SPRING_DATASOURCE_URL: jdbc:mysql://mysql-genshin:3306/genshin_artifact?autoReconnect=true&useSSL=false
+   SPRING_DATASOURCE_URL: jdbc:mysql://mysql-genshin:3306/genshin_artifact?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
   depends_on:
    mysql-genshin:
     condition: service_healthy
