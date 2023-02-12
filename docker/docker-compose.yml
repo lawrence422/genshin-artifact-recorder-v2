@@ -23,6 +23,8 @@ services:
   container_name: 'genshin-artifact-recorder-server'
   environment:
    SPRING_DATASOURCE_URL: jdbc:mysql://mysql-genshin:3306/genshin_artifact?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
+  ports:
+   - '8709:8709'
   depends_on:
    mysql-genshin:
     condition: service_healthy
