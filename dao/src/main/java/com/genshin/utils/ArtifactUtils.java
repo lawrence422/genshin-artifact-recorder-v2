@@ -1,6 +1,7 @@
 package com.genshin.utils;
 
 import com.genshin.entity.Artifact;
+import com.genshin.exception.ArtifactParseException;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
@@ -19,6 +20,7 @@ public class ArtifactUtils {
 
     @SneakyThrows
     public static Artifact artifactParser(Map<String, String> artifactSetMap, Map<String, String> artifactStatsMap, Map<String, String> artifactTypeMap, List<String> rawArtifact) {
+        List<String> exceptionList = new ArrayList<>(List.of("攻击力", "防御力", "生命值"));
         String cursor = rawArtifact.get(0);
         //parse artifactType
         Class artifactClass = Class.forName(Artifact.class.getName());
@@ -37,7 +39,7 @@ public class ArtifactUtils {
         final var temp = rawArtifact.get(2);
         Pattern pattern = Pattern.compile(".*%");
         if (pattern.matcher(temp).matches()) {
-            cursor = String.format("%s%s", rawArtifact.get(1), "%");
+            cursor = renameCursor(exceptionList, rawArtifact.get(1));
         } else {
             cursor = rawArtifact.get(1);
         }
@@ -60,13 +62,8 @@ public class ArtifactUtils {
                 String artifactStats = "";
                 double artifactStatsValue = 0.0;
                 if (percentagePatternMatcher.find()) {
-                    String tempStats=percentagePatternMatcher.group(1);
-                    List<String>tempList=new ArrayList<>(List.of("攻击力","防御力","生命值"));
-                    if (tempList.contains(tempStats)) {
-                        artifactStats = String.format("%s%s",tempStats, "%");
-                    }else {
-                        artifactStats=tempStats;
-                    }
+                    String tempStats = percentagePatternMatcher.group(1);
+                    artifactStats = renameCursor(exceptionList, tempStats);
                     artifactStatsValue = Double.parseDouble(percentagePatternMatcher.group(2));
 
                 } else if (patternMatcher.find()) {
@@ -92,7 +89,27 @@ public class ArtifactUtils {
             String setName = matcher.group(1);
             reflectionInjectFromEnum(artifactSetMap, setName, artifactClass, artifact, "setArtifactSet", String.class);
         }
-        return (Artifact) artifact;
+
+        Artifact artifactResult = (Artifact) artifact;
+        if (artifactIsEmpty(artifactResult)) {
+            throw new ArtifactParseException();
+        }
+
+        return artifactResult;
+    }
+
+    private static boolean artifactIsEmpty(Artifact artifact) {
+        return artifact.getArtifactSet() == null || artifact.getArtifactType() == null || artifact.getArtifactMainStats() == null;
+    }
+
+    private static String renameCursor(List<String> exceptionList, String stats) {
+        String artifactStats;
+        if (exceptionList.contains(stats)) {
+            artifactStats = String.format("%s%s", stats, "%");
+        } else {
+            artifactStats = stats;
+        }
+        return artifactStats;
     }
 
     @SneakyThrows

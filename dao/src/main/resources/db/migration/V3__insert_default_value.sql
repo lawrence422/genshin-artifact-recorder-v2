@@ -98,6 +98,8 @@ INSERT INTO `artifact_set_type_enum`(`artifact_set_type_name`, `artifact_set_typ
 VALUES ('沉沦之心', '水套');
 INSERT INTO `artifact_set_type_enum`(`artifact_set_type_name`, `artifact_set_type_abbrevation`)
 VALUES ('乐园遗落之花', '花神');
+INSERT INTO `artifact_set_type_enum`(`artifact_set_type_name`, `artifact_set_type_abbrevation`)
+VALUES ('沙上楼阁史话', '沙楼');
 
 INSERT INTO `users`(`name`, `authority`, `password`)
 VALUES ('genshin_artifact_recorder', 'admin',

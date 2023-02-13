@@ -1,7 +1,9 @@
 package com.genshin.service.impl;
 
 import com.genshin.entity.Artifact;
+import com.genshin.entity.ArtifactErrorDetail;
 import com.genshin.entity.ArtifactInterface;
+import com.genshin.repository.ArtifactErrorDetailRepository;
 import com.genshin.repository.ArtifactRepository;
 import com.genshin.repository.ArtifactSetRepository;
 import com.genshin.repository.ArtifactStatsRepository;
@@ -35,6 +37,10 @@ public class ArtifactServiceImpl implements ArtifactService {
 
     private final ArtifactTypeRepository artifactTypeRepository;
 
+    private final ArtifactErrorDetailRepository artifactErrorDetailRepository;
+
+
+
     @Override
     public int[] insertArtifact(List<List<String>> rawArtifactList) {
         initialMap();
@@ -44,11 +50,11 @@ public class ArtifactServiceImpl implements ArtifactService {
         for (List<String> rawArtifact : rawArtifactList) {
             try {
                 Artifact artifact = ArtifactUtils.artifactParser(artifactSetMap, artifactStatsMap, artifactTypeMap, rawArtifact);
-//                System.out.println(artifact);
                 artifactList.add(artifact);
                 parserResult[index]++;
-            } catch (Exception ignored) {
+            } catch (Exception exception) {
                 log.error("Parse Error:" + rawArtifact.toString());
+                artifactErrorDetailRepository.save(new ArtifactErrorDetail(rawArtifact));
             }
             index++;
         }

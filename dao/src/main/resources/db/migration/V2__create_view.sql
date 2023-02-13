@@ -67,57 +67,57 @@ select (select count(0)
        (select cast(((sum(`complement_double_critical`) + sum(`initial_double_critical`)) /
                      (select count(0) from `genshin_artifact`.`artifact`)) as decimal(5, 4)))                                                                                   AS `total_double_critical_rate`,
        (select count(0) from `genshin_artifact`.`artifact`)
-AS `total_artifact`;
+                                                                                                                                                                                AS `total_artifact`;
 
 DROP VIEW IF EXISTS `double_critical_enchanting_rate`;
-CREATE VIEW `genshin_artifact`.`double_critical_enchanting_rate` AS
-select ((select sum(`a`.`total2`)
-         from (select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1`) AS `total2`
-               from `genshin_artifact`.`artifact_enchanting`
-               where ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1` is not null) and
-                      ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1` = '暴击') or
-                       (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1` = '暴伤')))
+CREATE VIEW `double_critical_enchanting_rate` AS
+select ((select sum(`A`.`total2`)
+         from (select count(`artifact_enchanting`.`artifact_enchanting_1`) AS `total2`
+               from `artifact_enchanting`
+               where ((`artifact_enchanting`.`artifact_enchanting_1` is not null) and
+                      ((`artifact_enchanting`.`artifact_enchanting_1` = '暴击') or
+                       (`artifact_enchanting`.`artifact_enchanting_1` = '暴伤')))
                union
-               select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2`) AS `count(artifact_enchanting_2)`
-               from `genshin_artifact`.`artifact_enchanting`
-               where ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2` is not null) and
-                      ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2` = '暴击') or
-                       (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2` = '暴伤')))
+               select count(`artifact_enchanting`.`artifact_enchanting_2`) AS `count(artifact_enchanting_2)`
+               from `artifact_enchanting`
+               where ((`artifact_enchanting`.`artifact_enchanting_2` is not null) and
+                      ((`artifact_enchanting`.`artifact_enchanting_2` = '暴击') or
+                       (`artifact_enchanting`.`artifact_enchanting_2` = '暴伤')))
                union
-               select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3`) AS `count(artifact_enchanting_3)`
-               from `genshin_artifact`.`artifact_enchanting`
-               where ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3` is not null) and
-                      ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3` = '暴击') or
-                       (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3` = '暴伤')))
+               select count(`artifact_enchanting`.`artifact_enchanting_3`) AS `count(artifact_enchanting_3)`
+               from `artifact_enchanting`
+               where ((`artifact_enchanting`.`artifact_enchanting_3` is not null) and
+                      ((`artifact_enchanting`.`artifact_enchanting_3` = '暴击') or
+                       (`artifact_enchanting`.`artifact_enchanting_3` = '暴伤')))
                union
-               select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4`) AS `count(artifact_enchanting_4)`
-               from `genshin_artifact`.`artifact_enchanting`
-               where ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4` is not null) and
-                      ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4` = '暴击') or
-                       (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4` = '暴伤')))
+               select count(`artifact_enchanting`.`artifact_enchanting_4`) AS `count(artifact_enchanting_4)`
+               from `artifact_enchanting`
+               where ((`artifact_enchanting`.`artifact_enchanting_4` is not null) and
+                      ((`artifact_enchanting`.`artifact_enchanting_4` = '暴击') or
+                       (`artifact_enchanting`.`artifact_enchanting_4` = '暴伤')))
                union
-               select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5`) AS `count(artifact_enchanting_5)`
-               from `genshin_artifact`.`artifact_enchanting`
-               where ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5` is not null) and
-                      ((`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5` = '暴击') or
-                       (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5` = '暴伤')))) `A`) /
-        sum(`b`.`total`)) AS `double_critical_enchant_rate`
-from (select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1`) AS `total`
-      from `genshin_artifact`.`artifact_enchanting`
-      where (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_1` is not null)
+               select count(`artifact_enchanting`.`artifact_enchanting_5`) AS `count(artifact_enchanting_5)`
+               from `artifact_enchanting`
+               where ((`artifact_enchanting`.`artifact_enchanting_5` is not null) and
+                      ((`artifact_enchanting`.`artifact_enchanting_5` = '暴击') or
+                       (`artifact_enchanting`.`artifact_enchanting_5` = '暴伤')))) `A`) /
+        sum(`B`.`total`)) AS `double_critical_enchant_rate`
+from (select count(`artifact_enchanting`.`artifact_enchanting_1`) AS `total`
+      from `artifact_enchanting`
+      where (`artifact_enchanting`.`artifact_enchanting_1` is not null)
       union
-      select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2`) AS `count(artifact_enchanting_2)`
-      from `genshin_artifact`.`artifact_enchanting`
-      where (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_2` is not null)
+      select count(`artifact_enchanting`.`artifact_enchanting_2`) AS `count(artifact_enchanting_2)`
+      from `artifact_enchanting`
+      where (`artifact_enchanting`.`artifact_enchanting_2` is not null)
       union
-      select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3`) AS `count(artifact_enchanting_3)`
-      from `genshin_artifact`.`artifact_enchanting`
-      where (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_3` is not null)
+      select count(`artifact_enchanting`.`artifact_enchanting_3`) AS `count(artifact_enchanting_3)`
+      from `artifact_enchanting`
+      where (`artifact_enchanting`.`artifact_enchanting_3` is not null)
       union
-      select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4`) AS `count(artifact_enchanting_4)`
-      from `genshin_artifact`.`artifact_enchanting`
-      where (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_4` is not null)
+      select count(`artifact_enchanting`.`artifact_enchanting_4`) AS `count(artifact_enchanting_4)`
+      from `artifact_enchanting`
+      where (`artifact_enchanting`.`artifact_enchanting_4` is not null)
       union
-      select count(`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5`) AS `count(artifact_enchanting_5)`
-      from `genshin_artifact`.`artifact_enchanting`
-      where (`genshin_artifact`.`artifact_enchanting`.`artifact_enchanting_5` is not null)) `B`
+      select count(`artifact_enchanting`.`artifact_enchanting_5`) AS `count(artifact_enchanting_5)`
+      from `artifact_enchanting`
+      where (`artifact_enchanting`.`artifact_enchanting_5` is not null)) `B`

@@ -13,12 +13,12 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class ArtifactParseError implements Serializable {
+public class ArtifactErrorDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
 
-    public ArtifactParseError(List<String> rawArtifact){
+    public ArtifactErrorDetail(List<String> rawArtifact){
         this.rawArtifact=rawArtifact.toString();
     }
     private String rawArtifact;
